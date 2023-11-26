@@ -1,0 +1,77 @@
+﻿@model IEnumerable<Library.Models.Publication>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Publication</h1>
+
+<div class="d-flex justify-content-between">
+    <form asp-controller="Publications" asp-action="Index" method="post">
+        <p>
+            <div class="d-flex">
+                <div class="form-outline search-input">
+                    <input type="text" class="form-control input" placeholder="Search book"
+                           name="SearchString" value="@ViewData["CurrentSearch"]" />
+                </div>
+                <button type="submit" value="Search" class="btn btn-outline-dark ml-2 mr-2">
+                    <i class="fa fa-search"></i>
+                </button>
+            </div>
+        </p>
+    </form>
+
+    <div class="align-self-end mb-3">
+        <a class="btn btn-success " asp-action="Create">
+            Create New
+        </a>
+    </div>
+</div>
+
+<table class="table table-hover">
+    <thead>
+        <tr class="table-primary">
+            <th>
+                <a class="text-white" asp-route-sortorder="@ViewData["IdSort"]">
+                    @Html.DisplayName("#") <i class="fa fa-sort"></i>
+                </a>
+            </th>
+            <th>
+                <a class="text-white" asp-route-sortOrder="@ViewData["BookNameSort"]">
+                    @Html.DisplayName("Book Name") <i class="fa fa-sort"></i>
+                </a>
+            </th>
+            <th>
+                <a class="text-white" asp-route-sortOrder="@ViewData["AuthorNameSort"]">
+                    @Html.DisplayName("Author Name") <i class="fa fa-sort"></i>
+                </a>
+            </th>
+            <th>
+                <a class="text-white" asp-route-sortOrder="@ViewData["DateSort"]">
+                    @Html.DisplayName("Published_Date") <i class="fa fa-sort"></i>
+                </a>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr class="table-secondary">
+            <td >
+                    <a asp-action="Details" asp-route-id="@item.Id">
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Book.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Author.FullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PublishedDate)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
