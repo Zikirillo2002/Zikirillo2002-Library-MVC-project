@@ -1,0 +1,96 @@
+﻿@model Library.ViewModel.BookViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="d-flex justify-content-between">
+    
+    <form asp-controller="Books" asp-action="Index" method="post">
+        <div class="align-self-end mb-3 mt-5">
+            <div class="form-outline search-input border border-dark">
+                <input type="text" class="form-control input" placeholder="Search book"
+                       name="SearchString" value="@ViewData["CurrentSearch"]" />
+            </div>
+            <button type="submit" value="Search" class="btn btn-outline-dark ml-2 mr-2 mt-2">
+                Search<i class="fa fa-search"></i>
+            </button>
+        </div>
+
+        <div class="align-self-end">
+            <div class="mb-2 ">
+                <label class="form-label "> Select category </label>
+                <select class="form-select border border-dark" asp-items="Model.Categories" asp-for="Category">
+                    <option>All</option>
+                </select>
+            </div>
+            <div class="mb-3 mt-2">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+
+    </form>
+
+    <div class="align-self-end mb-3">
+        <a class="btn btn-success " asp-action="Create">
+            Create Book
+        </a>
+    </div>
+    
+</div>
+
+<table class="table table-hover">
+    <thead>
+        <tr class="table-primary">
+            <th>
+                <a class="text-white" asp-route-sortorder="@ViewData["IdSort"]">
+                    @Html.DisplayName("#") <i class="fa fa-sort"></i>
+                </a>
+            </th>
+            <th>
+                <a class="text-white" asp-route-sortOrder="@ViewData["NameSort"]">
+                    @Html.DisplayName("Book Name") <i class="fa fa-sort"></i>
+                </a>
+            </th>
+            <th>
+                <a class="text-white" asp-route-sortOrder="@ViewData["IdSort"]">
+                    @Html.DisplayName("Description") <i class="fa fa-sort"></i>
+                </a>
+            </th>
+            <th>
+                <a class="text-white" asp-route-sortOrder="@ViewData["PriceSort"]">
+                    @Html.DisplayName("Price") <i class="fa fa-sort"></i>
+                </a>
+            </th>
+            <th>
+                <a class="text-white" asp-route-sortOrder="@ViewData["CategoryNameSort"]">
+                    @Html.DisplayName("Category") <i class="fa fa-sort"></i>
+                </a>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Books) {
+        <tr>
+            <td>
+                    <a asp-action="Details" asp-route-id="@item.Id">
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category.Name)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
